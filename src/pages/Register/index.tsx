@@ -46,7 +46,7 @@ function Register(): ReactElement {
                         </select>
                     </div>
                     <button type="submit" className="btn btn-primary btn-customized mt-4">
-                        Login
+                        Registrar
                     </button>
                 </form>
             </div>

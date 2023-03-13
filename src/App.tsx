@@ -10,8 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalRegisterEntry from './components/ModalRegisterEntry';
 import DetailsVehicle from './pages/DetailsVehicle';
-
-
+import es from 'date-fns/locale/es'
 
 function NavbarWrapper() {
 

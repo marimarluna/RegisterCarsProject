@@ -1,10 +1,11 @@
 import { ResponseType } from 'axios';
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import axios from '../utils/axios';
-import { LogType, ModalState, StoreContextType, TypesVehicles, Vehicle, typeVehicles } from '../utils/types';
+import { LogType, ModalState, StoreContextType, TypesVehicles, Vehicle, typeVehicles, DetailsVehicleType, PaysLogs } from '../utils/types';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { getTimeAmountByType } from '../utils/commonFunctions';
+import { differenceInMinutes } from 'date-fns';
 
 const initialStore: StoreContextType = {
     loading: false,
@@ -26,6 +27,7 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState<Boolean>(false)
     const [listVehicles, setListVehicles] = useState<Vehicle[]>([]);
+    const [detailsVehicle, setDetailsVehicle] = useState<DetailsVehicleType>()
     const [registerEntryState, setRegisterEntryState] = useState<ModalState>(initialStore.registerEntryState)
 
     const loadListVehicles = async () => {
@@ -113,6 +115,24 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const getDetailsVehicle = async (id: number) => {
         const { data: vehicle } = await axios.get(`vehicles/${id}`)
+        const { data: listPayLogs } = await axios.get(`pays?idVehicle=${id}`)
+        const { data: listLogsMonth } = await axios.get(`logs?idVehicle=${id}&_sort=dateEntry&_order=desc`)
+        const totalPays = listPayLogs.reduce((prev: number, current: PaysLogs) => prev + current.amount, 0)
+        const totalTime = listPayLogs.reduce((prev: number, current: PaysLogs) => prev + current.time, 0)
+        const totalTimeMonth = listLogsMonth.reduce((prev: number, current: LogType) => {
+            const fiDate = current.dateExit ? new Date(current.dateExit) : new Date()
+            const timeBetweenDates = differenceInMinutes(fiDate, new Date(current.dateEntry))
+            return prev + timeBetweenDates
+        }, 0)
+        setDetailsVehicle({
+            ...vehicle,
+            listPayLogs,
+            listLogsMonth,
+            totalPays,
+            totalTime,
+            totalTimeMonth
+        })
+
     }
 
     return (
@@ -125,7 +145,8 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
             setRegisterEntry,
             setRegisterExit,
             startMonth,
-            getDetailsVehicle
+            getDetailsVehicle,
+            detailsVehicle
         }}
         >
             {children}

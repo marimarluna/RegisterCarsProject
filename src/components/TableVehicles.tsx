@@ -1,15 +1,14 @@
-import React, { ReactElement } from "react"
+import { ReactElement } from "react"
 import Table from 'react-bootstrap/Table';
-import { useContextStore } from "../store";
 import { Vehicle } from '../utils/types';
 import { Link } from 'react-router-dom';
+import ButtonRegister from './ButtonRegister';
 
 interface TableTypes {
   data: Array<Vehicle>
 }
 
 const TableVehicles = ({ data = [] }: TableTypes): ReactElement => {
-  const { setRegisterEntry, setRegisterExit } = useContextStore()
   if (!data.length) {
     return (
       <div>
@@ -33,7 +32,7 @@ const TableVehicles = ({ data = [] }: TableTypes): ReactElement => {
       </thead>
       <tbody>
         {data.map((vehicle) => {
-          const { id, plate, typeVehicle, active } = vehicle
+          const { id, plate, typeVehicle } = vehicle
           return (
             <tr key={`table-vehicle-row-${id}`}>
               <td>{id}</td>
@@ -41,10 +40,8 @@ const TableVehicles = ({ data = [] }: TableTypes): ReactElement => {
               <td>{typeVehicle}</td>
               <td>
                 <div className="d-flex flex-wrap gap-1 ">
-                  <button className="btn btn-info btn-sm flex-fill" onClick={() => !active ? setRegisterEntry(vehicle) : setRegisterExit(vehicle)}>
-                    Registrar {active ? "Salida" : "Entrada"}
-                  </button>
-                  <button className="btn btn-info btn-sm flex-fill">Detalles</button>
+                  <ButtonRegister vehicle={vehicle} fullWidth />
+                  <Link to={`/detail/${id}`} className="btn btn-info btn-sm flex-fill">Detalles</Link>
                   <button className="btn btn-danger btn-sm flex-fill">Eliminar</button>
                 </div>
               </td>

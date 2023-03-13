@@ -1,4 +1,4 @@
-import { differenceInMinutes } from 'date-fns';
+import { differenceInMinutes, format } from 'date-fns';
 import axios from './axios';
 import { LogType, Vehicle } from './types';
 
@@ -25,4 +25,9 @@ export const getTimeAmountByType = async (vehicle: Vehicle, log: LogType) => {
         time: totalMinutes,
         amount: amount
     }
+}
+
+export const formatterDate = (date: Date) => {
+    const formattype = "d 'de' MMMM yyyy 'a las' HH:mm";
+    return format(new Date(date), formattype);
 }

@@ -10,12 +10,66 @@
       "plate": "abc-12345",
       "typeVehicle": "Residente",
       "id": 1,
-      "active": true
+      "active": true,
+      "listPayLogs": [
+        {
+          "idVehicle": 1,
+          "date": "2023-03-13T00:34:03.148Z",
+          "amount": 1.5,
+          "time": 30,
+          "id": 1
+        },
+        {
+          "idVehicle": 1,
+          "date": "2023-03-13T01:04:37.988Z",
+          "amount": 1.5,
+          "time": 30,
+          "id": 4
+        },
+        {
+          "idVehicle": 1,
+          "date": "2023-03-13T01:24:01.230Z",
+          "amount": 0.9500000000000001,
+          "time": 19,
+          "id": 6
+        },
+        {
+          "idVehicle": 1,
+          "date": "2023-03-13T01:36:05.405Z",
+          "amount": 0.6000000000000001,
+          "time": 12,
+          "id": 7
+        },
+        {
+          "idVehicle": 1,
+          "date": "2023-03-13T01:58:27.917Z",
+          "amount": 1.1,
+          "time": 22,
+          "id": 10
+        },
+        {
+          "idVehicle": 1,
+          "date": "2023-03-13T01:59:15.381Z",
+          "amount": 0,
+          "time": 0,
+          "id": 11
+        }
+      ],
+      "listLogsMonth": [
+        {
+          "idVehicle": 1,
+          "dateEntry": "2023-03-13T01:58:27.933Z",
+          "id": 8,
+          "dateExit": "2023-03-13T01:59:15.361Z"
+        }
+      ],
+      "totalPays": 5.65,
+      "totalTime": 113
     },
     {
       "plate": "abc-12321",
       "typeVehicle": "No residente",
-      "active": true,
+      "active": false,
       "id": 2
     },
     {
@@ -23,23 +77,29 @@
       "typeVehicle": "Oficial",
       "active": true,
       "id": 3
+    },
+    {
+      "plate": "hhj-77897",
+      "typeVehicle": "No residente",
+      "active": true,
+      "id": 4
     }
   ],
   "logs": [
     {
-      "idVehicle": 1,
-      "dateEntry": "2023-03-13T00:34:03.173Z",
-      "id": 2
-    },
-    {
-      "idVehicle": 2,
-      "dateEntry": "2023-03-13T00:34:03.176Z",
-      "id": 3
-    },
-    {
       "idVehicle": 3,
-      "dateEntry": "2023-03-13T00:34:03.179Z",
+      "dateEntry": "2023-03-13T01:59:47.118Z",
       "id": 4
+    },
+    {
+      "idVehicle": 4,
+      "dateEntry": "2023-03-13T01:59:47.120Z",
+      "id": 6
+    },
+    {
+      "idVehicle": 1,
+      "dateEntry": "2023-03-13T01:59:47.123Z",
+      "id": 9
     }
   ],
   "pays": [
@@ -63,6 +123,83 @@
       "amount": 0,
       "time": 28,
       "id": 3
+    },
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T01:04:37.988Z",
+      "amount": 1.5,
+      "time": 30,
+      "id": 4
+    },
+    {
+      "idVehicle": 2,
+      "date": "2023-03-13T01:11:15.090Z",
+      "amount": 18.5,
+      "time": 37,
+      "id": 5
+    },
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T01:24:01.230Z",
+      "amount": 0.9500000000000001,
+      "time": 19,
+      "id": 6
+    },
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T01:36:05.405Z",
+      "amount": 0.6000000000000001,
+      "time": 12,
+      "id": 7
+    },
+    {
+      "idVehicle": 3,
+      "date": "2023-03-13T01:58:27.915Z",
+      "amount": 0,
+      "time": 84,
+      "id": 8
+    },
+    {
+      "idVehicle": 4,
+      "date": "2023-03-13T01:58:27.916Z",
+      "amount": 24.5,
+      "time": 49,
+      "id": 9
+    },
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T01:58:27.917Z",
+      "amount": 1.1,
+      "time": 22,
+      "id": 10
+    },
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T01:59:15.381Z",
+      "amount": 0,
+      "time": 0,
+      "id": 11
+    },
+    {
+      "idVehicle": 3,
+      "date": "2023-03-13T01:59:47.111Z",
+      "amount": 0,
+      "time": 1,
+      "id": 12
+    },
+    {
+      "idVehicle": 4,
+      "date": "2023-03-13T01:59:47.113Z",
+      "amount": 0.5,
+      "time": 1,
+      "id": 13
+    },
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T01:59:47.115Z",
+      "amount": 0,
+      "time": 0,
+      "id": 14
     }
   ]
 }

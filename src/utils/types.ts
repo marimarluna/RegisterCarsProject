@@ -57,15 +57,18 @@ export interface FunctionLogsEnd {
     object: LogsFunctionEnd
 }
 
-export interface PaysLogs { 
+export interface PaysLogs {
     idVehicle: number
     date: Date
     amount: number
     time: number
     id: 0
- }
+}
 
 export interface DetailsVehicleType extends Vehicle {
-    listLogsMonth: Array<LogType>,
+    listLogsMonth: Array<LogType>
     listPayLogs: Array<PaysLogs>
+    totalPays: number
+    totalTime: number,
+    totalTimeMonth: number
 }
