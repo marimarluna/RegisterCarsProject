@@ -1,0 +1,68 @@
+{
+  "users": [
+    {
+      "name": "Mariana",
+      "id": 1
+    }
+  ],
+  "vehicles": [
+    {
+      "plate": "abc-12345",
+      "typeVehicle": "Residente",
+      "id": 1,
+      "active": true
+    },
+    {
+      "plate": "abc-12321",
+      "typeVehicle": "No residente",
+      "active": true,
+      "id": 2
+    },
+    {
+      "plate": "xyc-34343",
+      "typeVehicle": "Oficial",
+      "active": true,
+      "id": 3
+    }
+  ],
+  "logs": [
+    {
+      "idVehicle": 1,
+      "dateEntry": "2023-03-13T00:34:03.173Z",
+      "id": 2
+    },
+    {
+      "idVehicle": 2,
+      "dateEntry": "2023-03-13T00:34:03.176Z",
+      "id": 3
+    },
+    {
+      "idVehicle": 3,
+      "dateEntry": "2023-03-13T00:34:03.179Z",
+      "id": 4
+    }
+  ],
+  "pays": [
+    {
+      "idVehicle": 1,
+      "date": "2023-03-13T00:34:03.148Z",
+      "amount": 1.5,
+      "time": 30,
+      "id": 1
+    },
+    {
+      "idVehicle": 2,
+      "date": "2023-03-13T00:34:03.149Z",
+      "amount": 10,
+      "time": 20,
+      "id": 2
+    },
+    {
+      "idVehicle": 3,
+      "date": "2023-03-13T00:34:03.150Z",
+      "amount": 0,
+      "time": 28,
+      "id": 3
+    }
+  ]
+}
