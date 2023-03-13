@@ -14,10 +14,10 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link active" to={"/register"}>Registrar vehículos</Link>
+                            <Link className="nav-link" to={"/register"}>Registrar vehículos</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active" onClick={startMonth} >Comienza mes</a>
+                            <button className="nav-link btn" onClick={startMonth} >Comienza mes</button>
                         </li>
                     </ul>
                 </div>

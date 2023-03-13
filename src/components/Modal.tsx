@@ -24,10 +24,10 @@ function ModalBoostrap({ show = false, handleClose, children, title, actions = [
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Close
+          Cerrar
         </Button>
-        {actions.map(({ label, callback }: ActionsButtonType) => (
-          <Button key={`key-${label}`} variant="primary" onClick={callback}>
+        {actions.map(({ label, callback, color = "primary" }: ActionsButtonType) => (
+          <Button key={`key-${label}`} variant={color} onClick={callback}>
             {label}
           </Button>
         ))}

@@ -3,12 +3,14 @@ import Table from 'react-bootstrap/Table';
 import { Vehicle } from '../utils/types';
 import { Link } from 'react-router-dom';
 import ButtonRegister from './ButtonRegister';
+import { useContextStore } from "../store";
 
 interface TableTypes {
   data: Array<Vehicle>
 }
 
 const TableVehicles = ({ data = [] }: TableTypes): ReactElement => {
+  const { handleModalStateDelete } = useContextStore()
   if (!data.length) {
     return (
       <div>
@@ -42,7 +44,7 @@ const TableVehicles = ({ data = [] }: TableTypes): ReactElement => {
                 <div className="d-flex flex-wrap gap-1 ">
                   <ButtonRegister vehicle={vehicle} fullWidth />
                   <Link to={`/detail/${id}`} className="btn btn-info btn-sm flex-fill">Detalles</Link>
-                  <button className="btn btn-danger btn-sm flex-fill">Eliminar</button>
+                  <button className="btn btn-danger btn-sm flex-fill" onClick={() => handleModalStateDelete(vehicle)}>Eliminar</button>
                 </div>
               </td>
             </tr>

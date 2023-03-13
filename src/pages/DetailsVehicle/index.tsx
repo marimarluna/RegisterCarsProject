@@ -7,7 +7,7 @@ import TableLogs from '../../components/TableLogs';
 
 const DetailsVehicle = () => {
     const { id } = useParams()
-    const { getDetailsVehicle, detailsVehicle } = useContextStore()
+    const { getDetailsVehicle, detailsVehicle, handleModalStateDelete } = useContextStore()
     useEffect(() => {
         getDetailsVehicle(Number(id))
     }, [])
@@ -18,30 +18,31 @@ const DetailsVehicle = () => {
             </div>
         )
     }
+    const { totalPays, totalTime, listPayLogs, totalTimeMonth, listLogsMonth, ...vehicle } = detailsVehicle
     return (
         <div className='contentScreen container justify-content-start mt-2'>
             <h1>Detalles del vehículo {detailsVehicle?.plate.toUpperCase()} - {detailsVehicle.typeVehicle} </h1>
             <div className='mb-3 d-flex gap-2'>
-                <ButtonRegister vehicle={detailsVehicle} />
-                <button>Eliminar</button>
+                <ButtonRegister vehicle={vehicle} />
+                <button className='btn btn-danger btn-sm' onClick={() => handleModalStateDelete(vehicle)}>Eliminar</button>
             </div>
-            <div className='d-flex gap-3 flex-wrap'>
-                <div className='flex-fill border-end px-3'>
+            <div className="row">
+                <div className='col border-end px-3'>
                     <div className='d-flex justify-content-between'>
                         <h4>Pagos</h4>
                         <div className='text-end'>
-                            <p>Total: <b>$ {detailsVehicle.totalPays.toFixed(2)}</b></p>
-                            <p>Tiempo total: <b>{detailsVehicle.totalTime}</b></p>
+                            <p>Total: <b>$ {totalPays.toFixed(2)}</b></p>
+                            <p>Tiempo total: <b>{totalTime}</b></p>
                         </div>
                     </div>
-                    <TablePays data={detailsVehicle.listPayLogs} />
+                    <TablePays data={listPayLogs} />
                 </div>
-                <div className='flex-fill'>
+                <div className='col'>
                     <div className='d-flex justify-content-between'>
                         <h4>Entradas este mes</h4>
-                        <p>Minutos en el mes: <b>{detailsVehicle.totalTimeMonth}</b></p>
+                        <p>Minutos en el mes: <b>{totalTimeMonth}</b></p>
                     </div>
-                    <TableLogs data={detailsVehicle.listLogsMonth} />
+                    <TableLogs data={listLogsMonth} />
                 </div>
             </div>
         </div>

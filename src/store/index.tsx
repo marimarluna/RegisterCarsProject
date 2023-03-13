@@ -3,7 +3,7 @@ import { createContext, FC, PropsWithChildren, useContext, useEffect, useState }
 import axios from '../utils/axios';
 import { LogType, ModalState, StoreContextType, TypesVehicles, Vehicle, typeVehicles, DetailsVehicleType, PaysLogs } from '../utils/types';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getTimeAmountByType } from '../utils/commonFunctions';
 import { differenceInMinutes } from 'date-fns';
 
@@ -14,21 +14,30 @@ const initialStore: StoreContextType = {
     registerEntryState: {
         show: false,
     },
+    deleteVehicleState: {
+        show: false,
+    },
     closeModalRegisterEntry: () => { },
+    closeModalDeleteVehicle: () => { },
     setRegisterEntry: () => { },
     setRegisterExit: () => { },
     startMonth: () => { },
     getDetailsVehicle: () => { },
+    deleteVehicle: () => { },
+    handleModalStateDelete: () => { },
 }
 
 export const StoreContext = createContext<StoreContextType>(initialStore);
 
 const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate()
+    let location = useLocation();
+
     const [loading, setLoading] = useState<Boolean>(false)
     const [listVehicles, setListVehicles] = useState<Vehicle[]>([]);
     const [detailsVehicle, setDetailsVehicle] = useState<DetailsVehicleType>()
     const [registerEntryState, setRegisterEntryState] = useState<ModalState>(initialStore.registerEntryState)
+    const [deleteVehicleState, setDeleteVehicleState] = useState<ModalState>(initialStore.deleteVehicleState)
 
     const loadListVehicles = async () => {
         try {
@@ -74,6 +83,9 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
             toast("Entrada registrada")
             setRegisterEntryState(initialStore.registerEntryState)
             loadListVehicles()
+            if(location.pathname.includes("detail") && params.id) {
+                getDetailsVehicle(params.id)
+            }
         } catch (error: any) {
             setLoading(false)
             toast.error(error.response.data.message)
@@ -88,6 +100,9 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
             const { data: EditVehicle } = await axios.put(`vehicles/${params.id}`, { ...params, active: false })
             const { time, amount } = await getTimeAmountByType(EditVehicle, resLog)
             toast("Salida registrada")
+            if(location.pathname.includes("detail") && params.id) {
+                getDetailsVehicle(params.id)
+            }
             loadListVehicles()
         } catch (error: any) {
             setLoading(false)
@@ -107,6 +122,7 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
                 }
                 return result
             }))
+            navigate("/")
         } catch (error: any) {
             setLoading(false)
             toast.error(error.response.data.message)
@@ -132,8 +148,41 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
             totalTime,
             totalTimeMonth
         })
-
     }
+
+    const deleteVehicle = async (id: number) => {
+        try {
+            setLoading(true)
+            const { data: listPayLogs } = await axios.get(`pays?idVehicle=${id}`)
+            const { data: listLogsMonth } = await axios.get(`logs?idVehicle=${id}&_sort=dateEntry&_order=desc`)
+            const deletePaysLog = Promise.all(listPayLogs.map(async (item: PaysLogs) => {
+                const { data: response } = await axios.delete(`pays/${item.id}`)
+                return response
+            }))
+            const deleteLogs = Promise.all(listLogsMonth.map(async (item: PaysLogs) => {
+                const { data: response } = await axios.delete(`logs/${item.id}`)
+                return response
+            }))
+            const { data: vehicle } = await axios.delete(`vehicles/${id}`)
+            setLoading(false)
+            toast("Se ha eliminado toda la información del vehículo")
+            closeModalDeleteVehicle()
+            loadListVehicles()
+            navigate("/")
+        } catch (error: any) {
+            setLoading(false)
+            toast.error(error.response.data.message)
+        }
+    }
+    
+    const handleModalStateDelete = (vehicle: Vehicle) => {
+        setDeleteVehicleState({
+            show: !deleteVehicleState.show,
+            vehicle: vehicle || null
+        })
+    }
+
+    const closeModalDeleteVehicle = () => setDeleteVehicleState(initialStore.deleteVehicleState)
 
     return (
         <StoreContext.Provider value={{
@@ -146,7 +195,11 @@ const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
             setRegisterExit,
             startMonth,
             getDetailsVehicle,
-            detailsVehicle
+            detailsVehicle,
+            deleteVehicle,
+            deleteVehicleState,
+            handleModalStateDelete,
+            closeModalDeleteVehicle
         }}
         >
             {children}

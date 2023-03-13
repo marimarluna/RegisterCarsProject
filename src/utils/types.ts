@@ -17,10 +17,13 @@ export interface Vehicle {
 export interface StoreFunctionsType {
     setVehicle: (params: Vehicle) => void
     closeModalRegisterEntry: () => void
+    closeModalDeleteVehicle: () => void
+    handleModalStateDelete: (params: Vehicle) => void
     setRegisterEntry: (params: Vehicle) => void
     setRegisterExit: (params: Vehicle) => void
     startMonth: () => void
     getDetailsVehicle: (id: number) => void
+    deleteVehicle: (id: number) => void
 }
 
 export interface StoreContextType extends StoreFunctionsType {
@@ -28,6 +31,7 @@ export interface StoreContextType extends StoreFunctionsType {
     listVehicles: Array<Vehicle>
     registerEntryState: ModalState,
     detailsVehicle?: DetailsVehicleType
+    deleteVehicleState: ModalState
 }
 
 export interface ActionsButtonType {
